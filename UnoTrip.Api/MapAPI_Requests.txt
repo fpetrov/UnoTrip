@@ -1,0 +1,7 @@
+﻿### Получить все рестораны в округе
+[out:json][bbox:{{bbox}}][timeout:600];
+(
+    nwr[amenity=cafe];
+    nwr[amenity=restaurant];
+);
+out geom;

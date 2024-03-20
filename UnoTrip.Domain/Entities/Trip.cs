@@ -10,6 +10,7 @@ public class Trip
     public string Name { get; set; }
     public string Description { get; set; }
     public List<Note> Notes { get; set; } = [];
+    public List<File> Files { get; set; } = [];
     public List<User> Subscribers { get; set; } = [];
     public List<Location> Locations { get; set; } = [];
 }
