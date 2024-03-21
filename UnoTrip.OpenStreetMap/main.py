@@ -9,6 +9,7 @@ from entities.DestinationRequest import DestinationRequest
 from providers.OpenStreetMapProvider import OpenStreetMapProvider
 
 app = FastAPI()
+geolocator = Nominatim(user_agent="UnoTrip")
 
 GRAPHHOPPER_TOKEN = 'ed83a659-67df-473e-aa47-7bfb2a4907dd'
 
@@ -24,7 +25,6 @@ provider = OpenStreetMapProvider(GRAPHHOPPER_TOKEN)
 
 @app.get("/route/{route_address}")
 async def get_route(route_address: str):
-    geolocator = Nominatim(user_agent="UnoTrip")
     location = geolocator.geocode(route_address)
 
     if not location:
