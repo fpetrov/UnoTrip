@@ -1,11 +1,7 @@
 from aiogram import Bot, Dispatcher
 
-from handlers import (questions,
-                      different_types,
-                      group_games,
-                      usernames,
-                      common,
-                      ordering_food)
+from handlers import common
+from handlers.registration import age_chosen, city_chosen
 
 from filters.permission import PermissionFilter
 from middlewares.chat_action import ChatActionMiddleware
@@ -23,11 +19,8 @@ async def run_app(token: str):
     dp.message.filter(PermissionFilter())
 
     dp.include_routers(common.router,
-                       ordering_food.router,
-                       questions.router,
-                       usernames.router,
-                       group_games.router,
-                       different_types.router)
+                       age_chosen.router,
+                       city_chosen.router)
 
     # await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)

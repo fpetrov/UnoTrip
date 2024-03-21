@@ -5,7 +5,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import default_state
 from aiogram.types import Message, ReplyKeyboardRemove
 
-from states.registration import RegistrationState
+from handlers.registration.states.registration import RegistrationState
 
 router = Router()
 
