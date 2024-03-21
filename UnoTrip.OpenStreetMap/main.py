@@ -28,7 +28,7 @@ async def get_route(route_address: str):
     location = geolocator.geocode(route_address)
 
     if not location:
-        return HTTPException(status_code=404, detail="Location not found")
+        raise HTTPException(status_code=404, detail="Location not found")
 
     return JSONResponse({
         "address": location.address,

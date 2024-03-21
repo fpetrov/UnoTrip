@@ -13,7 +13,11 @@ router = Router()
 @router.message(Command('start'))
 async def start_command(message: Message,
                         state: FSMContext):
-    # await state.clear()
+    current_data = await state.get_data()
+
+    if current_data.get('registered', False):
+        await message.answer(text='Ты уже зарегистрирован. Чтобы перейти в меню, нажми /menu',)
+        return
 
     await message.answer(text='Привет! Это бот для удобного планирования твоих путешествий.\n'
                               'Давай сначала заполним твой профиль. Сколько тебе лет?',

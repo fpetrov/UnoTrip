@@ -12,8 +12,10 @@ router = Router()
 
 @router.message(RegistrationState.waiting_for_age,
                 AgeFilter())
-async def age_chosen(message: Message, state: FSMContext):
-    await state.update_data(age=message.text)
+async def age_chosen(message: Message,
+                     state: FSMContext,
+                     age: int):
+    await state.update_data(age=age)
 
     await message.answer(
         text='Отлично, теперь введи свой город. Например, Москва',
