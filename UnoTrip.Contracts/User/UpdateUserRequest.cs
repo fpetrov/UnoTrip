@@ -2,7 +2,6 @@
 
 public record UpdateUserRequest(
     long TelegramId,
-    string Description,
-    string City,
-    string Country,
-    int Age);
+    string? Description,
+    string? City,
+    int? Age);

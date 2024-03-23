@@ -10,32 +10,29 @@ public class Trip
     public string Name { get; set; }
     public string Description { get; set; }
     public List<Note> Notes { get; set; } = [];
-    public List<File> Files { get; set; } = [];
     public List<User> Subscribers { get; set; } = [];
     public List<Location> Locations { get; set; } = [];
 }
 
 public class Location
 {
+    [Key]
+    public int Id { get; set; }
     public string Name { get; set; }
-    public DateTime Start { get; set; }
-    public DateTime End { get; set; }
+    public float Latitude { get; set; }
+    public float Longitude { get; set; }
+    public DateOnly Start { get; set; }
+    public DateOnly End { get; set; }
 }
 
+/// <summary>
+/// Заметка в путешествии. Представляет собой id файла в Telegram
+/// </summary>
 public class Note
 {
     [Key]
     public int Id { get; set; }
     public User Author { get; set; }
-    public string Text { get; set; }
+    public long FileId { get; set; }
     public bool IsPrivate { get; set; }
-}
-
-/// <summary>
-/// Файлы и различные картинки для путешествия.
-/// </summary>
-public class File
-{
-    public string Name { get; set; }
-    public string Path { get; set; }
 }

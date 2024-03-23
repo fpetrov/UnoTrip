@@ -28,6 +28,12 @@ public class UserRepository(
         return context
             .Set<User>()
             .Where(user => user.TelegramId == telegramId)
+            .Include(u => u.Trips)
+                .ThenInclude(t => t.Locations)
+            .Include(u => u.Trips)
+                .ThenInclude(t => t.Notes)
+            .Include(u => u.Trips)
+            .ThenInclude(t => t.Subscribers)
             .FirstOrDefaultAsync(cancellationToken);
     }
 
@@ -44,8 +50,7 @@ public class UserRepository(
     }
 
     public IQueryable<User> QueryBy(
-        Expression<Func<User, bool>> predicate,
-        CancellationToken cancellationToken = default)
+        Expression<Func<User, bool>> predicate)
     {
         return context
             .Set<User>()

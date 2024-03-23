@@ -1,6 +1,7 @@
 ﻿using ErrorOr;
 using Mediator;
 using UnoTrip.Application.Common.Interfaces.Persistence;
+using UnoTrip.Application.Common.Mappings;
 using UnoTrip.Application.User.Common;
 using UnoTrip.Domain.Common.Errors;
 
@@ -20,7 +21,7 @@ public class GetUserQueryHandler(
         if (user is null)
             return Errors.User.NotFound();
         
-        return new UserResult(user.TelegramId, user.Description, user.City, user.Country, user.Age);
+        return UserMapper.Map(user);
     }
 }
 

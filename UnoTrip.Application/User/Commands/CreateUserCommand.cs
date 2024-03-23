@@ -1,6 +1,7 @@
 ﻿using ErrorOr;
 using Mediator;
 using UnoTrip.Application.Common.Interfaces.Persistence;
+using UnoTrip.Application.Common.Mappings;
 using UnoTrip.Application.User.Common;
 using UnoTrip.Domain.Common.Errors;
 
@@ -25,13 +26,12 @@ public class CreateUserCommandHandler(
             TelegramId = request.TelegramId,
             Description = request.Description,
             City = request.City,
-            Country = request.Country,
             Age = request.Age
         };
 
         await userRepository.Create(user, cancellationToken);
         
-        return new UserResult(user.TelegramId, user.Description, user.City, user.Country, user.Age);
+        return UserMapper.Map(user);
     }
 }
 
@@ -39,6 +39,5 @@ public record CreateUserCommand(
     long TelegramId,
     string Description,
     string City,
-    string Country,
     int Age)
     : IRequest<ErrorOr<UserResult>>;

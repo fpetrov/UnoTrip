@@ -6,7 +6,7 @@ from starlette.responses import JSONResponse, Response
 from geopy.geocoders import Nominatim
 
 from entities.DestinationRequest import DestinationRequest
-from providers.OpenStreetMapProvider import OpenStreetMapProvider
+from providers.OpenStreetMapProviderFirefox import OpenStreetMapProvider
 
 app = FastAPI()
 geolocator = Nominatim(user_agent="UnoTrip")

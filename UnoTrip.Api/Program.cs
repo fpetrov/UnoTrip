@@ -19,6 +19,11 @@ api
     .MapGroup("/user")
     .MapUserEndpoints();
 
+api
+    .MapGroup("/trip")
+    .MapTripEndpoints()
+    .MapEditTripEndpoints();
+
 app.UseExceptionHandler();
 
 app.Run();
@@ -28,3 +33,5 @@ app.Run();
 // Mediator
 // Mapperly
 // FluentValidation
+
+// TODO: Fix issue where Contracts references Domain layer (just add local Location class?)

@@ -1,3 +1,11 @@
-﻿namespace UnoTrip.Contracts.Trips;
+﻿using UnoTrip.Domain.Entities;
 
-public record TripResponse;
+namespace UnoTrip.Contracts.Trip;
+
+public record TripResponse(
+    Guid Uuid,
+    string Name,
+    string Description,
+    List<Note> Notes,
+    List<long> SubscribersIds,
+    List<Location> Locations);

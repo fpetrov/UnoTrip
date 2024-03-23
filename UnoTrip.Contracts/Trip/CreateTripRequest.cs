@@ -1,3 +1,9 @@
-﻿namespace UnoTrip.Contracts.Trips;
+﻿using UnoTrip.Domain.Entities;
 
-public record CreateTripRequest;
+namespace UnoTrip.Contracts.Trip;
+
+public record CreateTripRequest(
+    long TelegramId,
+    string Name,
+    string Description,
+    List<Location>? Locations);

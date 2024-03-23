@@ -5,3 +5,12 @@
     nwr[amenity=restaurant];
 );
 out geom;
+
+
+### Все Дикси в округе
+[out:json];
+(
+	area[place=city][name="Москва"] -> .moscow;
+	nwr[shop][name="Дикси"](area.moscow);
+);
+out geom;

@@ -35,7 +35,7 @@ async def city_chosen(message: Message, state: FSMContext, open_street_map: Open
         reply_markup=make_row_keyboard('Да', 'Нет')
     )
 
-    await state.update_data(city=searched_city)
+    await state.update_data(city=searched_city[0])
 
 
 @router.message(

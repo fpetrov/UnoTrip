@@ -1,7 +1,6 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.firefox.options import Options
 
-from entities import DestinationRequest
+from app.entities import DestinationRequest
 
 import tempfile
 import os
@@ -21,8 +20,9 @@ class OpenStreetMapProvider:
         options.add_argument("window-size=1150,840")
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-dev-shm-usage")
+        options.headless = True
 
-        self.browser = webdriver.Chrome(options=options)
+        self.browser = webdriver.Firefox(options=options)
         self.browser.fullscreen_window()
 
         self.router = Graphhopper(graphhopper_token)
@@ -52,8 +52,8 @@ class OpenStreetMapProvider:
         self.browser.quit()
 
     def draw_plot(self,
-                         destinations: list[DestinationRequest],
-                         profile='car') -> Map:
+                  destinations: list[DestinationRequest],
+                  profile='car') -> Map:
         destinations = self.__convert_destinations_to_tuple__(destinations)
 
         # Определяем границы маршрута

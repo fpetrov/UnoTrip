@@ -9,6 +9,7 @@ public class User
     public long TelegramId { get; set; }
     public string Description { get; set; }
     public string City { get; set; }
-    public string Country { get; set; }
     public int Age { get; set; }
+
+    public List<Trip> Trips { get; set; } = [];
 }

@@ -18,6 +18,7 @@ public static class DependencyInjection
                 options => options.UseNpgsql(connectionString));
 
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ITripRepository, TripRepository>();
         
         return services;
     }

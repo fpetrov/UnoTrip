@@ -3,7 +3,7 @@ from aiogram.filters import Command
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import default_state
-from aiogram.types import Message, ReplyKeyboardRemove
+from aiogram.types import Message, ReplyKeyboardRemove, CallbackQuery
 
 from handlers.registration.states.registration import RegistrationState
 
@@ -44,3 +44,9 @@ async def cancel_command(message: Message, state: FSMContext):
     await message.answer(
         text='Действие отменено',
         reply_markup=ReplyKeyboardRemove())
+
+
+# @router.message(StateFilter(None))
+# async def cancel_callback(callback: CallbackQuery,
+#                           state: FSMContext):
+#     return

@@ -12,4 +12,12 @@ public class ApplicationContext : DbContext
     {
         
     }
+    
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder
+            .Entity<User>()
+            .HasMany(t => t.Trips)
+            .WithMany(t => t.Subscribers);
+    }
 }

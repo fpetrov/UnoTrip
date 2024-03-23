@@ -17,6 +17,5 @@ public interface IUserRepository
         CancellationToken cancellationToken = default);
     
     public IQueryable<Domain.Entities.User> QueryBy(
-        Expression<Func<Domain.Entities.User, bool>> predicate,
-        CancellationToken cancellationToken = default);
+        Expression<Func<Domain.Entities.User, bool>> predicate);
 }
