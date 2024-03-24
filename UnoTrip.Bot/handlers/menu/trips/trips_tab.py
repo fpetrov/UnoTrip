@@ -24,7 +24,7 @@ async def trips_command(callback: CallbackQuery):
     builder.row(InlineKeyboardButton(text='🔙 Назад',
                                      callback_data='menu_back'))
 
-    reply = f'Выбери, что ты хочешь сделать'
+    reply = f'👉 Выбери, что ты хочешь сделать'
 
     await callback.message.answer(reply,
                                   reply_markup=builder.as_markup())

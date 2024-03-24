@@ -16,7 +16,7 @@ router = Router()
 @router.callback_query(F.data == 'profile_edit_age')
 async def profile_edit_age(callback: CallbackQuery,
                            state: FSMContext):
-    reply = f'Хорошо, теперь введи свой новый возраст\n'
+    reply = f'✒️ Хорошо, теперь введи свой новый возраст\n'
 
     await callback.message.answer(reply)
 
@@ -45,7 +45,7 @@ async def age_chosen(message: Message,
     await state.set_state(None)
 
     await message.answer(
-        text='Отлично, ты изменил свой возраст',
+        text='🎉 Отлично, ты изменил свой возраст',
         reply_markup=ReplyKeyboardRemove()
     )
 
@@ -53,6 +53,6 @@ async def age_chosen(message: Message,
 @router.message(ProfileEditState.waiting_for_age)
 async def age_chosen_invalid(message: Message):
     await message.answer(
-        text='Похоже, что ты ввел возраст в неверном формате. Попробуй ещё раз',
+        text='❌ Похоже, что ты ввел возраст в неверном формате. Попробуй ещё раз',
         reply_markup=ReplyKeyboardRemove()
     )

@@ -16,10 +16,12 @@ router = Router()
 @router.callback_query(F.data == 'trips_all')
 async def trips_all_query(callback: CallbackQuery,
                           backend: BackendService):
-    reply = (f'Вот список всех твоих путешествий.\n'
+    reply = (f'🏖 Вот список всех твоих путешествий.\n'
              f'Учти, что одновременно отображаться могут лишь 7 путешествий (если их больше, то они будут скрыты)')
 
     my_trips = await backend.trip_service.get_my(callback.from_user.id)
+
+    print(my_trips)
 
     builder = InlineKeyboardBuilder()
 

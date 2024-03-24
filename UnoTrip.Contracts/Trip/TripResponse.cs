@@ -6,6 +6,6 @@ public record TripResponse(
     Guid Uuid,
     string Name,
     string Description,
-    List<Note> Notes,
+    List<NoteResponse> Notes,
     List<long> SubscribersIds,
     List<Location> Locations);

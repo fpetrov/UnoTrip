@@ -17,9 +17,9 @@ class OpenStreetMapProvider:
     def __init__(self, graphhopper_token: str):
         options = Options()
         options.add_argument("--headless")
-        options.add_argument("window-size=1150,840")
-        options.add_argument("--no-sandbox")
-        options.add_argument("--disable-dev-shm-usage")
+        #options.add_argument("window-size=1150,840")
+        #options.add_argument("--no-sandbox")
+        #options.add_argument("--disable-dev-shm-usage")
         options.headless = True
 
         self.browser = webdriver.Firefox(options=options)
@@ -30,12 +30,12 @@ class OpenStreetMapProvider:
     def take_screenshot(self, plot: Map) -> bytes:
         plot_html = plot.get_root().render()
 
-        with tempfile.TemporaryFile(mode='w',
+        temp_file = tempfile.NamedTemporaryFile(mode='w',
                                     delete=False,
                                     suffix='.html',
-                                    encoding='utf-8') as temp_file:
-            temp_file.write(plot_html)
-            temp_file_path = temp_file.name
+                                    encoding='utf-8')
+        temp_file.write(plot_html)
+        temp_file_path = temp_file.name
 
         self.browser.maximize_window()
 
@@ -44,6 +44,7 @@ class OpenStreetMapProvider:
         wait = WebDriverWait(self.browser, 10)
         wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME, "leaflet-tile-loaded")))
 
+        temp_file.close()
         os.remove(temp_file_path)
 
         return self.browser.get_screenshot_as_png()

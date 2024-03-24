@@ -23,13 +23,15 @@ async def location_end(message: Message,
                        date: datetime,
                        backend: BackendService):
     await message.answer(
-        text=f'Конец посещения локации установлен на <b>{date}</b>',
+        text=f'🕘 Конец посещения локации установлен на <b>{date}</b>\n'
+             f'🎉 Локация успешно создана',
         parse_mode='HTML'
     )
 
     current_data = await state.get_data()
     location_data = current_data['location_data']
-    location_data['end'] = date
+    location_data['end'] = str(date)
+    location_data['start'] = str(location_data['start'])
 
     await state.update_data(location_data=location_data)
 
@@ -39,8 +41,8 @@ async def location_end(message: Message,
     await state.set_state(None)
 
 
-@router.message(TripEditState.waiting_for_location_name)
+@router.message(TripEditState.waiting_for_location_end)
 async def location_end_invalid(message: Message):
     await message.answer(
-        text='Неверный формат даты. Ожидается формат YYYY-MM-DD'
+        text='❌ Неверный формат даты. Ожидается формат YYYY-MM-DD'
     )

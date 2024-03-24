@@ -18,7 +18,7 @@ async def age_chosen(message: Message,
     await state.update_data(age=age)
 
     await message.answer(
-        text='Отлично, теперь введи свой город. Например, Москва',
+        text='📍 Отлично, теперь введи свой город. Например, Москва',
         reply_markup=ReplyKeyboardRemove()
     )
 
@@ -28,5 +28,5 @@ async def age_chosen(message: Message,
 @router.message(RegistrationState.waiting_for_age)
 async def age_chosen_invalid(message: Message, state: FSMContext):
     await message.answer(
-        text='Похоже, что вы ввели возраст в неверном формате. Попробуйте ещё раз'
+        text='❌ Похоже, что вы ввели возраст в неверном формате. Попробуйте ещё раз'
     )

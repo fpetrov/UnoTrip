@@ -1,4 +1,5 @@
 ﻿using Mediator;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using UnoTrip.Api.Common.Mappings;
 using UnoTrip.Application.Trip.Commands;
@@ -12,8 +13,10 @@ public static class TripEndpoints
     public static RouteGroupBuilder MapTripEndpoints(
         this RouteGroupBuilder group)
     {
-        group.MapGet("/{uuid:guid}", GetTrip);
+        group.MapGet("/{id:guid}", GetTrip);
+        group.MapGet("/{id:guid}/route", GetTripRoute);
         group.MapGet("/my/{telegramId:long}", GetMyTrips);
+        group.MapGet("/my/{telegramId:long}/notes", GetMyTripNotes);
         group.MapPost("/", CreateTrip);
         group.MapDelete("/{id:guid}", DeleteTrip);
 
@@ -21,10 +24,10 @@ public static class TripEndpoints
     }
     
     private static async Task<IResult> GetTrip(
-        [FromRoute] Guid uuid,
+        [FromRoute] Guid id,
         [FromServices] ISender sender)
     {
-        var query = new GetTripById(uuid);
+        var query = new GetTripByIdQuery(id);
         var result = await sender.Send(query);
         
         return result.MatchFirst(
@@ -32,15 +35,41 @@ public static class TripEndpoints
             _ => Results.NotFound());
     }
     
+    private static async Task<IResult> GetTripRoute(
+        [FromRoute] Guid id,
+        [FromQuery(Name = "for")] long telegramId,
+        [FromServices] ISender sender)
+    {
+        var query = new GetTripRouteQuery(id, telegramId);
+        var result = await sender.Send(query);
+        
+        return result.MatchFirst(
+            Results.Ok,
+            _ => Results.NotFound());
+    }
+    
     private static async Task<IResult> GetMyTrips(
         [FromRoute] long telegramId,
         [FromServices] ISender sender)
     {
-        var query = new GetMyTrips(telegramId);
+        var query = new GetMyTripsQuery(telegramId);
         var result = await sender.Send(query);
         
         return result.MatchFirst(
             tripResult => Results.Ok(tripResult.ConvertAll(TripMapper.Map)),
+            _ => Results.NotFound());
+    }
+    
+    private static async Task<IResult> GetMyTripNotes(
+        [FromRoute] long telegramId,
+        [FromQuery(Name = "trip_id")] Guid tripId,
+        [FromServices] ISender sender)
+    {
+        var query = new GetMyTripNotesQuery(telegramId, tripId);
+        var result = await sender.Send(query);
+        
+        return result.MatchFirst(
+            Results.Ok,
             _ => Results.NotFound());
     }
     

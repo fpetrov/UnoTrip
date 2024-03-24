@@ -40,7 +40,7 @@ async def trips_name_chosen(message: Message,
 @router.message(TripsState.waiting_for_name)
 async def name_chosen_invalid(message: Message):
     await message.answer(
-        text='Похоже, что ты ввел название в неверном формате. Попробуй ещё раз'
+        text='❌ Похоже, что ты ввел название в неверном формате. Попробуй ещё раз'
     )
 
 
@@ -60,19 +60,19 @@ async def trips_description_chosen(message: Message,
 
     if not result:
         await message.answer(
-            text='Похоже, что ты ввел название, которое уже существует в твоих путешествиях. Попробуй ещё раз'
+            text='❌ Похоже, что ты ввел название, которое уже существует в твоих путешествиях. Попробуй ещё раз'
         )
         return
 
     await state.set_state(None)
 
-    await message.answer('Путешествие создано')
+    await message.answer('🎉 Путешествие создано')
 
     await message.answer(
         text='Хочешь создать добавить маршрут в путешествие?',
         reply_markup=InlineKeyboardBuilder()
         .row(InlineKeyboardButton(text='✅ Да',
-                                  callback_data='trips_create_route'))
+                                  callback_data=f'trip_add_location_{result["uuid"]}'))
         .row(InlineKeyboardButton(text='🔙 Нет',
                                   callback_data='menu_trips'))
         .as_markup()
@@ -82,5 +82,5 @@ async def trips_description_chosen(message: Message,
 @router.message(TripsState.waiting_for_description)
 async def description_chosen_invalid(message: Message):
     await message.answer(
-        text='Похоже, что ты ввел описание в неверном формате. Попробуй ещё раз'
+        text='❌ Похоже, что ты ввел описание в неверном формате. Попробуй ещё раз'
     )

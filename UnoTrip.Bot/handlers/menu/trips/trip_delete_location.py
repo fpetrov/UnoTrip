@@ -30,7 +30,7 @@ async def trip_delete_location(callback: CallbackQuery,
 
     for i, location in enumerate(trip_data['locations'], start=1):
         builder.row(InlineKeyboardButton(text=f"{i}. {location['name']}",
-                                         callback_data=f'trip_delete_location_with_{location["id"]}'))
+                                         callback_data=f'trip_remove_location_with_{location["id"]}'))
 
     await callback.message.answer(
         text=reply,
@@ -40,8 +40,8 @@ async def trip_delete_location(callback: CallbackQuery,
     await callback.answer()
 
 
-@router.callback_query(F.data.startswith('trip_delete_location_with_'))
-async def trip_delete_location_with(callback: CallbackQuery,
+@router.callback_query(F.data.startswith('trip_remove_location_with_'))
+async def trip_remove_location_with(callback: CallbackQuery,
                                     state: FSMContext,
                                     backend: BackendService):
     location_id = callback.data.split('_')[-1]
@@ -52,7 +52,9 @@ async def trip_delete_location_with(callback: CallbackQuery,
         current_data['trip_id'], location_id)
 
     await callback.message.answer(
-        text='Отлично, локация удалена'
+        text='🎉 Отлично, локация удалена'
     )
 
     await callback.answer()
+
+    await state.set_state(None)

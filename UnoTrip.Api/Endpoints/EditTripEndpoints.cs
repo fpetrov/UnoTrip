@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using UnoTrip.Application.Trip.Commands;
 using UnoTrip.Contracts.Trip;
+using UnoTrip.Contracts.Trip.Add;
+using UnoTrip.Contracts.Trip.Edit;
 using UnoTrip.Domain.Entities;
 
 namespace UnoTrip.Api.Endpoints;
@@ -15,6 +17,7 @@ public static class EditTripEndpoints
         group.MapPost("/{uuid:guid}/location", AddTripLocation);
         group.MapDelete("/{uuid:guid}/location/{locationId:int}", DeleteTripLocation);
         group.MapPost("/{uuid:guid}/subscribe", AddTripSubscriber);
+        group.MapPost("/{uuid:guid}/note", AddTripNote);
         
         return group;
     }
@@ -81,6 +84,19 @@ public static class EditTripEndpoints
         
         return result.MatchFirst(
             subscriberResult => Results.Ok(new { Subscribers = subscriberResult }),
+            _ => Results.NotFound());
+    }
+    
+    private static async Task<IResult> AddTripNote(
+        [FromRoute] Guid uuid,
+        [FromBody] AddTripNoteRequest request,
+        [FromServices] ISender sender)
+    {
+        var command = new AddTripNoteCommand(request.TelegramId, uuid, request.Name, request.ContentType, request.FileId, request.IsPrivate);
+        var result = await sender.Send(command);
+        
+        return result.MatchFirst(
+            Results.Ok,
             _ => Results.NotFound());
     }
 }

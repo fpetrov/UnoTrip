@@ -21,7 +21,7 @@ callback_answers = ['да', 'нет']
 @router.callback_query(F.data == 'profile_edit_city')
 async def profile_edit_age(callback: CallbackQuery,
                            state: FSMContext):
-    reply = f'Хорошо, теперь введи свой новый город\n'
+    reply = f'🔍 Хорошо, теперь введи свой новый город\n'
 
     await callback.message.answer(reply)
 
@@ -38,14 +38,14 @@ async def city_chosen(message: Message, state: FSMContext, open_street_map: Open
 
     if not searched_city:
         await message.answer(
-            text='Похоже, что ты ввел несуществующий город. Попробуй ещё раз'
+            text='☹️ Похоже, что ты ввел несуществующий город. Попробуй ещё раз'
         )
         return
 
     print(*searched_city)
 
     await message.answer(
-        text=f'Твой город <b>{searched_city[0]}</b>. Верно?',
+        text=f'🤔 Твой город <b>{searched_city[0]}</b>. Верно?',
         parse_mode='HTML',
         reply_markup=make_row_keyboard('Да', 'Нет')
     )
@@ -70,7 +70,7 @@ async def city_chosen_callback_yes(message: Message,
         })
 
     await message.answer(
-        text='Супер, ты изменил свой город',
+        text='🎉 Супер, ты изменил свой город',
         reply_markup=ReplyKeyboardRemove())
 
 
@@ -79,7 +79,7 @@ async def city_chosen_callback_yes(message: Message,
     F.text.lower() == callback_answers[1])
 async def city_chosen_callback_no(message: Message):
     await message.answer(
-        text='Попробуй ввести свой город еще раз, если не получается, то попробуй конкретизировать.\n'
+        text='🤔 Попробуй ввести свой город еще раз, если не получается, то попробуй конкретизировать.\n'
              'Например, добавив страну или регион',
         reply_markup=ReplyKeyboardRemove()
     )
@@ -88,5 +88,5 @@ async def city_chosen_callback_no(message: Message):
 @router.message(ProfileEditState.waiting_for_city)
 async def city_chosen_invalid(message: Message):
     await message.answer(
-        text='Похоже, что ты ввел город в неверном формате. Попробуй ещё раз'
+        text='❌ Похоже, что ты ввел город в неверном формате. Попробуй ещё раз'
     )

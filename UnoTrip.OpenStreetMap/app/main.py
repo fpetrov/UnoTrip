@@ -5,8 +5,8 @@ from starlette.responses import JSONResponse, Response
 
 from geopy.geocoders import Nominatim
 
-from entities.DestinationRequest import DestinationRequest
-from providers.OpenStreetMapProviderFirefox import OpenStreetMapProvider
+from entities.DestinationRequest import DestinationRequest, Destination
+from providers.OpenStreetMapProvider import OpenStreetMapProvider
 
 app = FastAPI()
 geolocator = Nominatim(user_agent="UnoTrip")
@@ -39,6 +39,14 @@ async def get_route(route_address: str):
 
 @app.post("/route/screenshot")
 async def get_route_screenshot(destination_request: DestinationRequest):
+    origin_location = geolocator.geocode(destination_request.origin)
+    origin_destination = Destination(
+        name='Ты',
+        lat=origin_location.latitude,
+        lng=origin_location.longitude
+    )
+
+    destination_request.destinations.insert(0, origin_destination)
     plot = provider.draw_plot(destination_request.destinations)
     image_content = provider.take_screenshot(plot)
 

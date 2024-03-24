@@ -61,13 +61,18 @@ class OpenStreetMapProvider:
         min_lon = min([point[1][1] for point in destinations])
         max_lon = max([point[1][1] for point in destinations])
 
-        padding_lat = (max_lat - min_lat) * 0.1  # Например, 10% отступа по широте
-        padding_lon = (max_lon - min_lon) * 0.1  # Например, 10% отступа по долготе
+        padding_lat = (max_lat - min_lat) * 0.1  # 10% отступа по широте
+        padding_lon = (max_lon - min_lon) * 0.1  # 10% отступа по долготе
 
         # Reverse dimensions
         locations = [point[1][::-1] for point in destinations]
 
-        route_path = self.router.directions(locations=locations,
+        # Route между origin и следующей точкой,
+        # чтобы покрасить путь в #9b46f0
+        route_origin_path = self.router.directions(locations=[locations[0], locations[1]],
+                                                   profile=profile)
+
+        route_path = self.router.directions(locations=locations[1:],
                                             profile=profile)
 
         plot = Map(location=[0, 0],
@@ -90,16 +95,24 @@ class OpenStreetMapProvider:
 
             (Marker(point[::-1],
                     radius=10,
-                    popup=Popup(destinations[i][0],
+                    popup=Popup(destinations[i][0].split(',')[0],
                                 show=True),
                     icon=Icon(color=color,
                               icon_color='white',
                               icon='flag'))
              .add_to(plot))
 
+        route_origin_path = [path[::-1] for path in route_origin_path.geometry]
         route_path = [path[::-1] for path in route_path.geometry]
 
-        # Draw route with #9b46f0 color
+        # Draw origin route with #9b46f0 color
+        PolyLine(locations=route_origin_path,
+                 weight=4,
+                 color='#FFD133',
+                 opacity=0.7) \
+            .add_to(plot)
+
+        # Draw main route with black color
         PolyLine(locations=route_path,
                  weight=4,
                  color='black',

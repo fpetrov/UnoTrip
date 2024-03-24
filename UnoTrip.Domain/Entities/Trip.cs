@@ -32,7 +32,9 @@ public class Note
 {
     [Key]
     public int Id { get; set; }
+    public string Name { get; set; }
+    public string ContentType { get; set; }
     public User Author { get; set; }
-    public long FileId { get; set; }
+    public string FileId { get; set; }
     public bool IsPrivate { get; set; }
 }

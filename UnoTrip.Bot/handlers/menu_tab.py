@@ -25,7 +25,7 @@ async def menu_command(message: Message):
                                      callback_data='menu_settings'))
 
     await message.answer(
-        text='Выберите то, что вас интересует',
+        text='👉 Выберите то, что вас интересует',
         reply_markup=builder.as_markup()
     )
 

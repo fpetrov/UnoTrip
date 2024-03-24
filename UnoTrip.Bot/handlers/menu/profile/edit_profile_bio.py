@@ -15,7 +15,7 @@ router = Router()
 @router.callback_query(F.data == 'profile_edit_bio')
 async def profile_edit_age(callback: CallbackQuery,
                            state: FSMContext):
-    reply = f'Хорошо, теперь свое новое описание (от 1 до 150 символов)\n'
+    reply = f'✒️ Хорошо, теперь свое новое описание (от 1 до 150 символов)\n'
 
     await callback.message.answer(reply)
 
@@ -43,7 +43,7 @@ async def bio_chosen(message: Message,
     await state.set_state(None)
 
     await message.answer(
-        text='Отлично, ты изменил описание профиля',
+        text='🎉 Отлично, ты изменил описание профиля',
         reply_markup=ReplyKeyboardRemove()
     )
 
@@ -51,5 +51,5 @@ async def bio_chosen(message: Message,
 @router.message(ProfileEditState.waiting_for_bio)
 async def bio_chosen_invalid(message: Message):
     await message.answer(
-        text='Похоже, что ты ввел описание в неверном формате. Попробуй ещё раз'
+        text='❌ Похоже, что ты ввел описание в неверном формате. Попробуй ещё раз'
     )

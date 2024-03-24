@@ -14,3 +14,12 @@ out geom;
 	nwr[shop][name="Дикси"](area.moscow);
 );
 out geom;
+
+
+### Поиск rent-car услуг
+[out:json];
+area[name="Москва"]->.searchArea;
+(
+    nwr[amenity=car_rental](area.searchArea);
+);
+out geom;

@@ -21,16 +21,20 @@ async def trip_view_query(callback: CallbackQuery,
 
     trip = await backend.trip_service.get(trip_id)
 
-    reply = (f'Вот информация о путешествии:\n'
-             f'<b>Название:</b> {trip["name"]}\n'
-             f'<b>Описание:</b> {trip["description"]}\n'
-             f'<b>Локации:</b>\n')
+    reply = (f'ℹ️ Вот информация о путешествии:\n'
+             f'📌 <b>Название:</b> {trip["name"]}\n'
+             f'📌 <b>Описание:</b> {trip["description"]}\n\n'
+             f'📍 <b>Локации:</b>\n')
 
     for i, location in enumerate(trip['locations'], start=1):
-        reply += f'{i}. {location["name"]} Старт: {location["start"]} Конец: {location["end"]}\n'
+        reply += (f'{i}. {location["name"]}\n'
+                  f'🚩<b>Старт:</b> {location["start"]}\n'
+                  f'🚩<b>Конец:</b> {location["end"]}\n\n')
 
     builder = InlineKeyboardBuilder()
 
+    builder.row(InlineKeyboardButton(text='🗺 Показать маршрут',
+                                     callback_data=f'trip_show_map_{trip["uuid"]}'))
     builder.row(InlineKeyboardButton(text='✍️ Поменять название',
                                      callback_data=f'trip_edit_name_{trip["uuid"]}'),
                 InlineKeyboardButton(text='✍️ Поменять описание',
@@ -42,7 +46,10 @@ async def trip_view_query(callback: CallbackQuery,
                                      callback_data=f'trip_delete_location_{trip["uuid"]}'))
 
     builder.row(InlineKeyboardButton(text='👥 Добавить друга',
-                                     callback_data='trips_all'),)
+                                     callback_data=f'trip_add_companion_{trip["uuid"]}'))
+
+    builder.row(InlineKeyboardButton(text='📝 Заметки',
+                                     callback_data=f'trip_notes_tab_{trip["uuid"]}'))
 
     builder.row(InlineKeyboardButton(text='🔙 Назад',
                                      callback_data='menu_trips'))

@@ -31,17 +31,13 @@ async def profile_command(callback: CallbackQuery,
 
     user_data = await backend.user_service.get(callback.from_user.id)
 
-    reply = f'<b>Имя:</b> {callback.from_user.full_name}\n' \
-            f'<b>Возраст:</b> {user_data["age"]}\n' \
-            f'<b>Город:</b> {user_data["city"]}\n' \
-            f'<b>Описание:</b> {user_data["description"]}\n'
+    reply = f'📌 <b>Имя:</b> {callback.from_user.full_name}\n' \
+            f'📌 <b>Возраст:</b> {user_data["age"]}\n' \
+            f'📍 <b>Город:</b> {user_data["city"]}\n' \
+            f'📌 <b>Описание:</b> {user_data["description"]}\n'
 
     await callback.message.answer(reply,
                                   reply_markup=builder.as_markup(),
                                   parse_mode='HTML')
 
     await callback.answer()
-
-    # TODO: Либо подгружать постоянно инфу с бекенда,
-    # либо в бекенде, при редактировании профиля, обновлять в редисе профиль
-

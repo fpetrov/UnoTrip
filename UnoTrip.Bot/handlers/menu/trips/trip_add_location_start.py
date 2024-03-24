@@ -23,7 +23,8 @@ async def location_start(message: Message,
                          date: datetime):
 
     await message.answer(
-        text=f'Начало посещения локации установлено на <b>{date}</b>',
+        text=f'🕘 Начало посещения локации установлено на <b>{date}</b>\n'
+             f'👉 Теперь укажи конец посещения локации в этом же формате',
         parse_mode='HTML'
     )
 
@@ -36,8 +37,8 @@ async def location_start(message: Message,
     await state.set_state(TripEditState.waiting_for_location_end)
 
 
-@router.message(TripEditState.waiting_for_location_name)
+@router.message(TripEditState.waiting_for_location_start)
 async def location_start_invalid(message: Message):
     await message.answer(
-        text='Неверный формат даты. Ожидается формат YYYY-MM-DD'
+        text='❌ Неверный формат даты. Ожидается формат YYYY-MM-DD'
     )

@@ -42,13 +42,13 @@ async def trip_description_chosen(message: Message,
     await state.set_state(None)
 
     await message.answer(
-        text='Отлично, ты изменил название путешествия',
+        text='🎉 Отлично, ты изменил название путешествия',
         reply_markup=ReplyKeyboardRemove()
     )
 
 
-@router.message(TripEditState.waiting_for_name)
+@router.message(TripEditState.waiting_for_description)
 async def trip_description_chosen_invalid(message: Message):
     await message.answer(
-        text='Похоже, что ты ввел описание в неверном формате. Попробуй ещё раз'
+        text='❌ Похоже, что ты ввел описание в неверном формате. Попробуй ещё раз'
     )

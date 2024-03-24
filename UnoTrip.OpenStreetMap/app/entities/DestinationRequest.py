@@ -8,4 +8,5 @@ class Destination:
 
 @dataclass
 class DestinationRequest:
+    origin: str
     destinations: list[Destination] = field(default_factory=list)

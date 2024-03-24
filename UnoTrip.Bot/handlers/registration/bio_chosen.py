@@ -26,10 +26,8 @@ async def bio_chosen(message: Message,
                                         current_data['city'],
                                         current_data['age'])
 
-    print('Registered')
-
     await message.answer(
-        text='Отлично, на этом регистрация закончилась :)\n'
+        text='🎉 Отлично, на этом регистрация закончилась :)\n'
              'Ты всегда можешь открыть меню, вызвав команду /menu',
         reply_markup=ReplyKeyboardRemove()
     )
@@ -40,5 +38,5 @@ async def bio_chosen(message: Message,
 @router.message(RegistrationState.waiting_for_bio)
 async def bio_chosen_invalid(message: Message):
     await message.answer(
-        text='Похоже, что ты ввел описание в неверном формате. Попробуй ещё раз'
+        text='❌ Похоже, что ты ввел описание в неверном формате. Попробуй ещё раз'
     )
