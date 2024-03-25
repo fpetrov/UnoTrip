@@ -39,9 +39,9 @@ class TripService(BaseService):
 
             return response.json()
 
-    async def get_route(self, trip_id: str):
+    async def get_route(self, user_id: int, trip_id: str):
         async with httpx.AsyncClient() as client:
-            response = await client.get(f'{self.address}/{trip_id}/route')
+            response = await client.get(f'{self.address}/{trip_id}/route?for={user_id}')
 
             return response.json()
 

@@ -1,6 +1,8 @@
-﻿namespace UnoTrip.Application.Trip.Common;
+﻿using System.Text.Json.Serialization;
+
+namespace UnoTrip.Application.Trip.Common;
 
 public record LocationResult(
     string Name,
-    float Latitude,
-    float Longitude);
+    [property: JsonPropertyName("lat")] float Latitude,
+    [property: JsonPropertyName("lng")] float Longitude);

@@ -8,7 +8,11 @@ from handlers.menu.profile import profile_tab
 from handlers.registration import age_chosen, city_chosen, bio_chosen
 from handlers.menu.profile import edit_profile_age, edit_profile_city, edit_profile_bio
 
-from handlers.menu.trips import trips_tab, trips_all, trips_view, trips_create, trip_add_companion, trip_add_location_start, trip_add_location_end, trip_add_location_name, trip_delete_location, trip_edit_description, trip_edit_name, trip_add_note_name, trip_add_note_file, trip_notes_all, trip_add_note_mode, trip_notes_tab
+from handlers.menu.trips import (trips_tab, trips_all, trips_view, trips_create, trip_add_companion,
+                                 trip_add_location_start, trip_add_location_end, trip_add_location_name,
+                                 trip_delete_location, trip_edit_description, trip_edit_name, trip_add_note_name,
+                                 trip_add_note_file, trip_notes_all, trip_add_note_mode, trip_notes_tab,
+                                 trip_show_map, trip_actions_tab)
 
 from filters.permission import PermissionFilter
 from middlewares.chat_action import ChatActionMiddleware
@@ -67,7 +71,9 @@ async def run_app(token: str):
                        trip_add_note_mode.router,
                        trip_notes_all.router,
                        trip_add_note_file.router,
-                       trip_add_note_name.router)
+                       trip_add_note_name.router,
+                       trip_show_map.router,
+                       trip_actions_tab.router)
 
     # await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)

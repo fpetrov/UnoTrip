@@ -35,6 +35,10 @@ async def trip_view_query(callback: CallbackQuery,
 
     builder.row(InlineKeyboardButton(text='🗺 Показать маршрут',
                                      callback_data=f'trip_show_map_{trip["uuid"]}'))
+
+    builder.row(InlineKeyboardButton(text='✨ Дополнительные функции',
+                                     callback_data=f'trip_actions_tab_{trip["uuid"]}'))
+
     builder.row(InlineKeyboardButton(text='✍️ Поменять название',
                                      callback_data=f'trip_edit_name_{trip["uuid"]}'),
                 InlineKeyboardButton(text='✍️ Поменять описание',

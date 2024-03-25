@@ -5,7 +5,9 @@ from starlette.responses import JSONResponse, Response
 
 from geopy.geocoders import Nominatim
 
-from entities.DestinationRequest import DestinationRequest, Destination
+from app.entities.requests.DestinationRequest import DestinationRequest, Destination
+from app.entities.requests.WeatherForecastRequest import WeatherForecastRequest
+from app.providers.WeatherForecastProvider import WeatherForecastProvider
 from providers.OpenStreetMapProvider import OpenStreetMapProvider
 
 app = FastAPI()
@@ -21,7 +23,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-provider = OpenStreetMapProvider(GRAPHHOPPER_TOKEN)
+route_provider = OpenStreetMapProvider(GRAPHHOPPER_TOKEN)
+weather_provider = WeatherForecastProvider()
+
 
 @app.get("/route/{route_address}")
 async def get_route(route_address: str):
@@ -47,11 +51,19 @@ async def get_route_screenshot(destination_request: DestinationRequest):
     )
 
     destination_request.destinations.insert(0, origin_destination)
-    plot = provider.draw_plot(destination_request.destinations)
-    image_content = provider.take_screenshot(plot)
+    plot = route_provider.draw_plot(destination_request.destinations)
+    image_content = route_provider.take_screenshot(plot)
 
     return Response(content=image_content, media_type="image/png")
 
+
+@app.post("/weather")
+async def get_weather_forecast(
+        weather_request: WeatherForecastRequest):
+    forecast = weather_provider.get_weather_forecast(weather_request)
+
+    return forecast
+
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
-    provider.__del__()
+    route_provider.__del__()
