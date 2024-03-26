@@ -1,5 +1,6 @@
 from aiogram import Bot, Dispatcher
 from redis.asyncio import Redis
+from aiogram.methods import DeleteWebhook
 
 from handlers import common
 from handlers import menu_tab
@@ -37,13 +38,13 @@ async def run_app(token: str):
     #fsq3Y8z+w9u3UaJn02eTjzHv08mYxp59vYlkY//DhHGB7vE=
 
     dp = Dispatcher(storage=storage,
-                    backend=BackendService('http://localhost:5174/api', places_token='fsq3Y8z+w9u3UaJn02eTjzHv08mYxp59vYlkY//DhHGB7vE='),
+                    backend=BackendService('http://localhost:5000/api', places_token='fsq3Y8z+w9u3UaJn02eTjzHv08mYxp59vYlkY//DhHGB7vE='),
                     open_street_map=OpenStreetMapService('http://localhost:8000'))
 
     dp.message.middleware(ChatActionMiddleware())
 
     # TODO: Не забыть удалить этот фильтр
-    dp.message.filter(PermissionFilter())
+    #dp.message.filter(PermissionFilter())
 
     # Общие обработчики
     dp.include_router(common.router)
@@ -91,5 +92,5 @@ async def run_app(token: str):
                        bar_action.router,
                        wiki_action.router)
 
-    # await bot.delete_webhook(drop_pending_updates=True)
+    await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)

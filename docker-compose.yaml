@@ -14,16 +14,25 @@ services:
             - 5432:5432
         environment:
             - POSTGRES_USER=postgres
+            - POSTGRES_PORT=5432
             - POSTGRES_HOST=postgres
             - POSTGRES_DB=postgres
             - POSTGRES_PASSWORD=123
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+            start_period: 10s
     
     api:
-        build: ./UnoTrip.Api
+        build: ./UnoTrip.Backend
         container_name: api
         restart: always
         ports:
-            - 5174:5174
+            - 443:443
+        environment:
+            - CONNECTION_STRING=Host=0.0.0.0;Port=5432;Database=postgres;Username=postgres;Password=123;
         depends_on:
             db:
                 condition: service_healthy
