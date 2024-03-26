@@ -2,10 +2,9 @@ using UnoTrip.Api;
 using UnoTrip.Api.Endpoints;
 using UnoTrip.Application;
 using UnoTrip.Infrastructure;
+using UnoTrip.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateSlimBuilder(args);
-
-builder.Configuration.AddEnvironmentVariables();
 
 // Register layers.
 builder.Services
@@ -14,6 +13,9 @@ builder.Services
     .AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
+
+// Apply database migrations.
+app.ApplyMigrations();
 
 var api = app.MapGroup("/api");
 
@@ -28,9 +30,7 @@ api
 
 app.UseExceptionHandler();
 
-var address = app.Configuration["API_ADDRESS"] ?? "localhost";
-
-app.Run(address);
+app.Run();
 
 // Stack:
 // NativeAOT (in future, EF Core has no NativeAOT support yet)

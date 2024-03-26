@@ -27,24 +27,28 @@ from aiogram.fsm.storage.redis import RedisStorage
 from services.backend import BackendService
 from services.open_street_map import OpenStreetMapService
 
+import os
+
 
 async def run_app(token: str):
     bot = Bot(token)
 
-    # storage = RedisStorage(Redis(host='127.0.0.1', port=6379, db=0))
+    redis_host = os.environ.get("REDIS_HOST", "localhost")
+    redis_port = int(os.environ.get("REDIS_PORT", "6379"))
+
+    api_host = os.environ.get("API_HOST")
+
+    #storage = RedisStorage(Redis(host=redis_host, port=redis_port, db=0))
 
     storage = MemoryStorage()
 
     #fsq3Y8z+w9u3UaJn02eTjzHv08mYxp59vYlkY//DhHGB7vE=
 
     dp = Dispatcher(storage=storage,
-                    backend=BackendService('http://localhost:5000/api', places_token='fsq3Y8z+w9u3UaJn02eTjzHv08mYxp59vYlkY//DhHGB7vE='),
-                    open_street_map=OpenStreetMapService('http://localhost:8000'))
+                    backend=BackendService(f'{api_host}/api', places_token='fsq3Y8z+w9u3UaJn02eTjzHv08mYxp59vYlkY//DhHGB7vE='),
+                    open_street_map=OpenStreetMapService('http://176.53.161.198:8000'))
 
     dp.message.middleware(ChatActionMiddleware())
-
-    # TODO: Не забыть удалить этот фильтр
-    #dp.message.filter(PermissionFilter())
 
     # Общие обработчики
     dp.include_router(common.router)
