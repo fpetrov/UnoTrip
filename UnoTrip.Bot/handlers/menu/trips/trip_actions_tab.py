@@ -31,25 +31,34 @@ async def trip_action_tab(callback: CallbackQuery,
                                      callback_data=f'weather_action_{trip_id}'))
 
     builder.row(InlineKeyboardButton(text='🗽 Достопримечательности',
-                                     callback_data=f'hotels_action_{trip_id}'))
+                                     callback_data=f'attractions_action_{trip_id}'))
 
     builder.row(InlineKeyboardButton(text='🛎 Подобрать отели',
-                                     callback_data=f'hotels_action_{trip_id}'))
+                                     callback_data=f'hotel_action_{trip_id}'))
 
     builder.row(InlineKeyboardButton(text='🍜 Кафе и рестораны',
-                                     callback_data=f'hotels_action_{trip_id}'))
+                                     callback_data=f'cafe_action_{trip_id}'))
+
+    builder.row(InlineKeyboardButton(text='🍾 Бары',
+                                     callback_data=f'bar_action_{trip_id}'))
+
+    builder.row(InlineKeyboardButton(text='💊 Аптеки',
+                                     callback_data=f'pharmacy_action_{trip_id}'))
 
     builder.row(InlineKeyboardButton(text='🚘 Аренда машины',
-                                     callback_data=f'hotels_action_{trip_id}'))
+                                     callback_data=f'car_rent_action_{trip_id}'))
 
     builder.row(InlineKeyboardButton(text='👥 Найти попутчика',
                                      callback_data=f'hotels_action_{trip_id}'))
 
-    builder.row(InlineKeyboardButton(text='ℹ️ Топ 5 фактов',
-                                     callback_data=f'hotels_action_{trip_id}'))
+    builder.row(InlineKeyboardButton(text='ℹ️ Топ 3 факта',
+                                     callback_data=f'top_3_facts_action_{trip_id}'))
 
     builder.row(InlineKeyboardButton(text='🤖 Q/A бот',
-                                     callback_data=f'hotels_action_{trip_id}'))
+                                     callback_data=f'ask_gpt_action'))
+
+    builder.row(InlineKeyboardButton(text='📚 История города',
+                                     callback_data=f'wiki_action_{trip_id}'))
 
     builder.adjust(2)
 
@@ -60,22 +69,3 @@ async def trip_action_tab(callback: CallbackQuery,
 
     await callback.answer()
 
-
-@router.callback_query(F.data.startswith('trip_remove_location_with_'))
-async def trip_remove_location_with(callback: CallbackQuery,
-                                    state: FSMContext,
-                                    backend: BackendService):
-    location_id = callback.data.split('_')[-1]
-
-    current_data = await state.get_data()
-
-    await backend.trip_service.delete_location(
-        current_data['trip_id'], location_id)
-
-    await callback.message.answer(
-        text='🎉 Отлично, локация удалена'
-    )
-
-    await callback.answer()
-
-    await state.set_state(None)

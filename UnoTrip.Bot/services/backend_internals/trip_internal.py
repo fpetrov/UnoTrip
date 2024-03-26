@@ -107,3 +107,10 @@ class TripService(BaseService):
             result = await client.post(f'{self.address}/{trip_id}/subscribe', json=data)
 
             return result.json()
+
+    async def get_location(self,
+                           location_id: int):
+        async with httpx.AsyncClient() as client:
+            response = await client.get(f'{self.address}/location/{location_id}')
+
+            return response.json()

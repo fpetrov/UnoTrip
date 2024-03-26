@@ -44,7 +44,7 @@ namespace UnoTrip.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Location",
+                name: "Locations",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -58,9 +58,9 @@ namespace UnoTrip.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Location", x => x.Id);
+                    table.PrimaryKey("PK_Locations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Location_Trip_TripId",
+                        name: "FK_Locations_Trip_TripId",
                         column: x => x.TripId,
                         principalTable: "Trip",
                         principalColumn: "Id");
@@ -120,8 +120,8 @@ namespace UnoTrip.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Location_TripId",
-                table: "Location",
+                name: "IX_Locations_TripId",
+                table: "Locations",
                 column: "TripId");
 
             migrationBuilder.CreateIndex(
@@ -144,7 +144,7 @@ namespace UnoTrip.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Location");
+                name: "Locations");
 
             migrationBuilder.DropTable(
                 name: "Note");

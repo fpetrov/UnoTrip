@@ -8,4 +8,7 @@ namespace UnoTrip.Application.Common.Mappings;
 public static partial class LocationMapper
 {
     public static partial LocationResult Map(Location location);
+
+    private static string MapDateOnlyToString(DateOnly date)
+        => date.ToString("yyyy-MM-dd");
 }

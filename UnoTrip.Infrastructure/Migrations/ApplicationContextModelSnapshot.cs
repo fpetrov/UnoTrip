@@ -68,7 +68,7 @@ namespace UnoTrip.Infrastructure.Migrations
 
                     b.HasIndex("TripId");
 
-                    b.ToTable("Location");
+                    b.ToTable("Locations");
                 });
 
             modelBuilder.Entity("UnoTrip.Domain.Entities.Note", b =>

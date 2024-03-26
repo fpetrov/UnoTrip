@@ -1,6 +1,6 @@
 from selenium.webdriver.firefox.options import Options
 
-from app.entities.requests import DestinationRequest
+from entities.requests import DestinationRequest
 
 import tempfile
 import os

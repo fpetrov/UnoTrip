@@ -15,6 +15,7 @@ public static class TripEndpoints
     {
         group.MapGet("/{id:guid}", GetTrip);
         group.MapGet("/{id:guid}/route", GetTripRoute);
+        group.MapGet("/location/{id:int}", GetLocation);
         group.MapGet("/my/{telegramId:long}", GetMyTrips);
         group.MapGet("/my/{telegramId:long}/notes", GetMyTripNotes);
         group.MapPost("/", CreateTrip);
@@ -41,6 +42,18 @@ public static class TripEndpoints
         [FromServices] ISender sender)
     {
         var query = new GetTripRouteQuery(id, telegramId);
+        var result = await sender.Send(query);
+        
+        return result.MatchFirst(
+            Results.Ok,
+            _ => Results.NotFound());
+    }
+    
+    private static async Task<IResult> GetLocation(
+        [FromRoute] int id,
+        [FromServices] ISender sender)
+    {
+        var query = new GetLocationQuery(id);
         var result = await sender.Send(query);
         
         return result.MatchFirst(

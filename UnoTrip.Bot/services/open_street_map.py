@@ -36,3 +36,32 @@ class OpenStreetMapService(BaseService):
             )
 
             return location
+
+    async def ask(self, prompt: str) -> str:
+        async with httpx.AsyncClient() as client:
+            response = await client.post(f'{self.address}/ask', json={'question': prompt}, timeout=30)
+            response_json = response.json()
+
+            return response_json['answer']
+
+    async def get_forecast(self,
+                           date: str,
+                           name: str,
+                           lat: float,
+                           lon: float) -> dict:
+
+        data = {
+            'date': date,
+            'destination': {
+                'name': name,
+                'lat': lat,
+                'lng': lon
+            },
+            'forecast_days': 7
+        }
+
+        async with httpx.AsyncClient() as client:
+            response = await client.post(f'{self.address}/weather', json=data)
+            response_json = response.json()
+
+            return response_json

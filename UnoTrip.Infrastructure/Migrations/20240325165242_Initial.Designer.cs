@@ -12,7 +12,7 @@ using UnoTrip.Infrastructure.Persistence;
 namespace UnoTrip.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240324154825_Initial")]
+    [Migration("20240325165242_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -71,7 +71,7 @@ namespace UnoTrip.Infrastructure.Migrations
 
                     b.HasIndex("TripId");
 
-                    b.ToTable("Location");
+                    b.ToTable("Locations");
                 });
 
             modelBuilder.Entity("UnoTrip.Domain.Entities.Note", b =>

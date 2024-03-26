@@ -14,6 +14,9 @@ from handlers.menu.trips import (trips_tab, trips_all, trips_view, trips_create,
                                  trip_add_note_file, trip_notes_all, trip_add_note_mode, trip_notes_tab,
                                  trip_show_map, trip_actions_tab)
 
+from handlers.menu.actions import (top_3_facts_action, weather_action, ask_gpt_action, attractions_action, cafe_action,
+                                   car_rent_action, hotel_action, bar_action, pharmacy_action, wiki_action)
+
 from filters.permission import PermissionFilter
 from middlewares.chat_action import ChatActionMiddleware
 
@@ -31,9 +34,11 @@ async def run_app(token: str):
 
     storage = MemoryStorage()
 
+    #fsq3Y8z+w9u3UaJn02eTjzHv08mYxp59vYlkY//DhHGB7vE=
+
     dp = Dispatcher(storage=storage,
-                    backend=BackendService('http://localhost:5174/api'),
-                    open_street_map=OpenStreetMapService('http://176.53.161.198:8000'))
+                    backend=BackendService('http://localhost:5174/api', places_token='fsq3Y8z+w9u3UaJn02eTjzHv08mYxp59vYlkY//DhHGB7vE='),
+                    open_street_map=OpenStreetMapService('http://localhost:8000'))
 
     dp.message.middleware(ChatActionMiddleware())
 
@@ -74,6 +79,17 @@ async def run_app(token: str):
                        trip_add_note_name.router,
                        trip_show_map.router,
                        trip_actions_tab.router)
+
+    dp.include_routers(top_3_facts_action.router,
+                       weather_action.router,
+                       ask_gpt_action.router,
+                       attractions_action.router,
+                       cafe_action.router,
+                       hotel_action.router,
+                       car_rent_action.router,
+                       pharmacy_action.router,
+                       bar_action.router,
+                       wiki_action.router)
 
     # await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)

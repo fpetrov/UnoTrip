@@ -7,9 +7,9 @@ import pandas as pd
 from openmeteo_sdk.WeatherApiResponse import WeatherApiResponse
 from retry_requests import retry
 
-from app.entities.requests.WeatherForecastRequest import WeatherForecastRequest
-from app.entities.responses.CurrentWeatherResponse import CurrentWeatherResponse
-from app.entities.responses.ForecastWeatherResponse import ForecastWeatherResponse
+from entities.requests.WeatherForecastRequest import WeatherForecastRequest
+from entities.responses.CurrentWeatherResponse import CurrentWeatherResponse
+from entities.responses.ForecastWeatherResponse import ForecastWeatherResponse
 
 
 class WeatherForecastProvider:

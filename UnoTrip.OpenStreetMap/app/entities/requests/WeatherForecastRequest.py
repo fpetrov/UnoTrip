@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from app.entities.requests.DestinationRequest import Destination
+from entities.requests.DestinationRequest import Destination
 
 
 @dataclass
