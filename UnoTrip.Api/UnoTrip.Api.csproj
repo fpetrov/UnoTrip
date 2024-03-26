@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <InvariantGlobalization>true</InvariantGlobalization>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
@@ -19,6 +20,12 @@
       <ProjectReference Include="..\UnoTrip.Application\UnoTrip.Application.csproj" />
       <ProjectReference Include="..\UnoTrip.Contracts\UnoTrip.Contracts.csproj" />
       <ProjectReference Include="..\UnoTrip.Infrastructure\UnoTrip.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
     </ItemGroup>
 
 </Project>
