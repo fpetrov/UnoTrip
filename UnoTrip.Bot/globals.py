@@ -36,7 +36,9 @@ async def run_app(token: str):
     redis_host = os.environ.get("REDIS_HOST", "localhost")
     redis_port = int(os.environ.get("REDIS_PORT", "6379"))
 
-    api_host = os.environ.get("API_HOST")
+    # api_host = os.environ.get("API_HOST")
+
+    api_host = 'http://localhost:5174'
 
     #storage = RedisStorage(Redis(host=redis_host, port=redis_port, db=0))
 

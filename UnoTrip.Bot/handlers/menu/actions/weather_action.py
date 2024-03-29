@@ -52,7 +52,7 @@ async def location_weather_forecast(callback: CallbackQuery,
     location_id = callback.data.split('_')[-1]
     location = await backend.trip_service.get_location(location_id)
 
-    utc_now = datetime.datetime.now(datetime.UTC)
+    utc_now = datetime.datetime.now(datetime.UTC).date()
     start_date = datetime.datetime.strptime(location['start'], '%Y-%m-%d').date()
 
     if start_date > utc_now:
