@@ -36,19 +36,18 @@ async def run_app(token: str):
     redis_host = os.environ.get("REDIS_HOST", "localhost")
     redis_port = int(os.environ.get("REDIS_PORT", "6379"))
 
-    # api_host = os.environ.get("API_HOST")
+    api_host = os.environ.get("API_HOST")
+    open_street_map_host = os.environ.get("OPEN_STREET_MAP_HOST")
 
-    api_host = 'http://localhost:5174'
+    #api_host = 'http://localhost:5174'
 
     #storage = RedisStorage(Redis(host=redis_host, port=redis_port, db=0))
 
     storage = MemoryStorage()
 
-    #fsq3Y8z+w9u3UaJn02eTjzHv08mYxp59vYlkY//DhHGB7vE=
-
     dp = Dispatcher(storage=storage,
                     backend=BackendService(f'{api_host}/api', places_token='fsq3Y8z+w9u3UaJn02eTjzHv08mYxp59vYlkY//DhHGB7vE='),
-                    open_street_map=OpenStreetMapService('http://176.53.161.198:8000'))
+                    open_street_map=OpenStreetMapService(open_street_map_host))
 
     dp.message.middleware(ChatActionMiddleware())
 
