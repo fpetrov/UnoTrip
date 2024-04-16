@@ -8,7 +8,7 @@ Manage your travels with ease
 
 ## Database Diagram
 
-![ER Diagram](/.github/schemes/DataBaseScheme.png)
+![ER Diagram](/.github/schemes/DatabaseScheme.png)
 
 ## ⚙️ Technologies
 
