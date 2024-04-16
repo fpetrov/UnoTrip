@@ -5,6 +5,7 @@
 Manage your travels with ease
 
 **Technical task:** [link](https://centraluniversity.notion.site/Backend-Travel-agent-3-0-f2d4cbabbaa94a338d3ad6293a9f0b4f)
+
 **Link:** [@uno_trip_bot](https://t.me/uno_trip_bot)
 
 ## Database Diagram
