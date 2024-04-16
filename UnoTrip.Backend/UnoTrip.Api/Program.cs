@@ -38,4 +38,4 @@ app.Run();
 // Mapperly
 // FluentValidation
 
-// TODO: Fix issue where Contracts references Domain layer (just add local Location class?)
+// TODO: Fix Contracts layer references Domain layer (just add local Location class?)
